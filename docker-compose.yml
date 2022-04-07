@@ -1,10 +1,7 @@
-version: "3.3"
-
 services:
 
   traefik:
     image: "traefik:v2.6"
-    container_name: "traefik"
     command:
       #- "--log.level=DEBUG"
       - "--api.insecure=true"
@@ -19,21 +16,19 @@ services:
 
   web1:
     image: "traefik/whoami"
-    #container_name: "simple-service"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.web1.rule=Host(`web1`)"
+      - "traefik.http.routers.web1.rule=PathPrefix(`/apps/web1`) || Host(`web1`)"
       - "traefik.http.routers.web1.entrypoints=web"
     deploy:
         replicas: 2
 
   web2:
     image: "traefik/whoami"
-    #container_name: "simple-service"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.web2.rule=Host(`web2`)"
+      #- "traefik.http.routers.web2.rule=Host(`web2`) || Path(`/apps/web2`)"
+      - "traefik.http.routers.web2.rule=PathPrefix(`/apps/web2`) || Host(`web2`)"
       - "traefik.http.routers.web2.entrypoints=web"
     deploy:
         replicas: 2
-
