@@ -90,3 +90,17 @@ X-Forwarded-Server: 2110b688a5fc
 X-Real-Ip: 172.22.0.1
 ```
 
+### Swarm Mode with custom network
+
+```bash
+docker swarm init
+docker network create -d overlay traefik-net
+docker stack deploy demo  -c docker-compose.swarm.network.yml
+```
+
+### Swarm Mode with default network
+
+```bash
+docker swarm init
+docker stack deploy demo  -c docker-compose.swarm.yml
+```
